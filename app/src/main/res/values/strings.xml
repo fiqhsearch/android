@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">الباحث الفقهي</string>
+    <string name="home_header">الباحث الفقهي</string>
+    <string name="search_label">…اختر كلمات مفتاحية، ولا تكثر</string>
+    <string name="start_search">تصفح المسائل</string>
+    <string name="hanbali">حنبلي</string>
+    <string name="shaifii">شافعي</string>
+    <string name="hanafi">حنفي</string>
+    <string name="maliki">مالكي</string>
+    <string name="home_subtitle">خدمة تسهل الوصول للمسائل الفقهية بحسب المذهب</string>
+</resources>
