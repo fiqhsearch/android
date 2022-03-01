@@ -1,16 +1,22 @@
-package com.fiqhsearcher.prefs
+package com.fiqhsearcher.preferences
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fiqhsearcher.Madhab
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class PrefsViewModel(context: Context) : ViewModel() {
+@HiltViewModel
+class PreferencesViewModel @Inject constructor(
+    @ApplicationContext context: Context
+) : ViewModel() {
 
     private val _darkTheme = MutableStateFlow(true)
     val darkTheme = _darkTheme.asStateFlow()

@@ -1,4 +1,4 @@
-package com.fiqhsearcher.prefs
+package com.fiqhsearcher.preferences
 
 import android.content.Context
 import androidx.datastore.preferences.core.booleanPreferencesKey

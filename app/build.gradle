@@ -1,15 +1,17 @@
 plugins {
     id "com.android.application"
     id "org.jetbrains.kotlin.android"
+    id "kotlin-kapt"
+    id "dagger.hilt.android.plugin"
 }
 
 android {
     signingConfigs {
         debug {
-            storeFile file('D:\\Android\\Keystores\\FiqhSearcher.jks')
-            storePassword 'ba7ith'
-            keyAlias 'ba7ith'
-            keyPassword 'ba7ith'
+            storeFile file("D:\\Android\\Keystores\\FiqhSearcher.jks")
+            storePassword "ba7ith"
+            keyAlias "ba7ith"
+            keyPassword "ba7ith"
         }
     }
 
@@ -56,6 +58,12 @@ android {
 }
 
 dependencies {
+    def nav_version = "2.4.1"
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-compiler:$hilt_version"
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+    implementation("androidx.navigation:navigation-compose:$nav_version")
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.5.0-alpha03"
     implementation "androidx.datastore:datastore-preferences:1.0.0"
     implementation "androidx.compose.material3:material3:1.0.0-alpha06"
     implementation "androidx.core:core-ktx:1.7.0"
