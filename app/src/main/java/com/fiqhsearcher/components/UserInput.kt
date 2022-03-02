@@ -1,4 +1,4 @@
-package com.fiqhsearcher.ui.components
+package com.fiqhsearcher.components
 
 import androidx.compose.animation.Animatable
 import androidx.compose.foundation.BorderStroke
@@ -29,6 +29,8 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
+import com.fiqhsearcher.ui.theme.DarkThemeColors
+import com.fiqhsearcher.ui.theme.LightThemeColors
 import kotlinx.coroutines.launch
 
 @Composable
@@ -49,13 +51,17 @@ fun SearchTextBar(
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     singleLine: Boolean = false,
+    textAlign: TextAlign = TextAlign.Right,
     maxLines: Int = Int.MAX_VALUE,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     onTextLayout: (TextLayoutResult) -> Unit = {},
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     cursorBrush: Brush = SolidColor(MaterialTheme.colorScheme.onSecondaryContainer),
 ) {
-    val sc = MaterialTheme.colorScheme.secondaryContainer
+    val sc = if (darkTheme)
+        DarkThemeColors.secondaryContainer
+    else
+        LightThemeColors.secondaryContainer
     val borderColor = remember(darkTheme) { Animatable(Color.Transparent) }
     val backgroundColor = remember(darkTheme) { Animatable(sc) }
     val scope = rememberCoroutineScope()
@@ -84,7 +90,7 @@ fun SearchTextBar(
             enabled = enabled,
             textStyle = textStyle.copy(
                 color = textColor,
-                textAlign = TextAlign.Right,
+                textAlign = textAlign,
                 textDirection = TextDirection.Content
             ),
             keyboardOptions = keyboardOptions,
@@ -96,7 +102,7 @@ fun SearchTextBar(
                         modifier = Modifier.fillMaxWidth(),
                         text = if (value.isNotEmpty()) "" else label,
                         color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.5f),
-                        textAlign = TextAlign.Right
+                        textAlign = textAlign
                     )
                 }
                 it()

@@ -1,19 +1,12 @@
-package com.fiqhsearcher.ui.components
+package com.fiqhsearcher.components
 
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import android.app.Activity
+import android.content.Context
+import android.content.ContextWrapper
 
-@Composable
-fun Title(text: String) {
-    Text(
-        text = text,
-        modifier = Modifier.padding(10.dp),
-        fontWeight = FontWeight.Bold,
-        fontSize = 30.sp
-    )
-}
+val Context.activity: Activity?
+    get() = when (this) {
+        is Activity -> this
+        is ContextWrapper -> baseContext.activity
+        else -> null
+    }

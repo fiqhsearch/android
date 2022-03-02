@@ -12,13 +12,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.fiqhsearcher.R.string.search_label
 import com.fiqhsearcher.R.string.start_search
-import com.fiqhsearcher.ui.components.SearchTextBar
+import com.fiqhsearcher.components.SearchTextBar
 
 @Composable
 @OptIn(ExperimentalComposeUiApi::class)
@@ -38,7 +39,7 @@ fun SearchBar(
         surfaceModifier = Modifier
             .padding(20.dp)
             .fillMaxWidth(),
-        textStyle = androidx.compose.ui.text.TextStyle.Default.copy(
+        textStyle = TextStyle.Default.copy(
             fontSize = 17.sp
         ),
         singleLine = true,

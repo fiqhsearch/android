@@ -6,7 +6,7 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 
-private val LightThemeColors = lightColorScheme(
+val LightThemeColors = lightColorScheme(
     primary = light_primary,
     onPrimary = light_onPrimary,
     primaryContainer = light_primaryContainer,
@@ -35,7 +35,7 @@ private val LightThemeColors = lightColorScheme(
     inversePrimary = light_inversePrimary,
 )
 
-private val DarkThemeColors = darkColorScheme(
+val DarkThemeColors = darkColorScheme(
     primary = dark_primary,
     onPrimary = dark_onPrimary,
     primaryContainer = dark_primaryContainer,
@@ -67,7 +67,7 @@ private val DarkThemeColors = darkColorScheme(
 @Composable
 fun FiqhSearcherTheme(
     useDarkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable() () -> Unit
+    content: @Composable () -> Unit
 ) {
     val colors = if (!useDarkTheme) {
         LightThemeColors

@@ -12,14 +12,12 @@ import com.fiqhsearcher.screen.settings.SettingsScreen
 @Composable
 fun SearcherNavigator() {
     val controller = rememberNavController()
-    val preferences = hiltViewModel<PreferencesViewModel>()
     NavHost(navController = controller, startDestination = "home") {
-
         composable("home") {
             HomeScreen(navigator = controller)
         }
         composable("settings") {
-            SettingsScreen(navigator = controller)
+            SettingsScreen()
         }
     }
 }

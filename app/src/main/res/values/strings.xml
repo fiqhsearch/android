@@ -8,4 +8,11 @@
     <string name="hanafi">حنفي</string>
     <string name="maliki">مالكي</string>
     <string name="home_subtitle">خدمة تسهل الوصول للمسائل الفقهية بحسب المذهب</string>
+    <string name="settings">الإعدادات</string>
+    <string name="night_read">القراءة الليلية</string>
+    <string name="my_madhab">المذهب الفقهي</string>
+    <string name="contact_us">تواصل معنا</string>
+    <string name="facebook">فيسبوك</string>
+    <string name="twitter">تويتر</string>
+    <string name="telegram">تيليجرام</string>
 </resources>
