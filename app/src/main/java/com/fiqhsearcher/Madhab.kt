@@ -8,8 +8,8 @@ enum class Madhab(
 ) {
     HANBALI(hanbali),
     SHAFII(shaifii),
-    HANAFI(hanafi),
-    MALIKI(maliki);
+    MALIKI(maliki),
+    HANAFI(hanafi);
 
     companion object {
         val values = values().toList()

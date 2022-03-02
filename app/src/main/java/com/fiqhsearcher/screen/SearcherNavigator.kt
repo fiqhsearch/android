@@ -7,6 +7,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.fiqhsearcher.preferences.PreferencesViewModel
 import com.fiqhsearcher.screen.home.HomeScreen
+import com.fiqhsearcher.screen.login.CreateAccountScreen
+import com.fiqhsearcher.screen.login.LoginScreen
 import com.fiqhsearcher.screen.settings.SettingsScreen
 
 @Composable
@@ -18,6 +20,12 @@ fun SearcherNavigator() {
         }
         composable("settings") {
             SettingsScreen()
+        }
+        composable("login") {
+            LoginScreen(navigator = controller)
+        }
+        composable("createAccount") {
+            CreateAccountScreen(navigator = controller)
         }
     }
 }

@@ -72,25 +72,28 @@ fun SettingsScreen(
         CategoryText(
             text = stringResource(R.string.contact_us)
         )
-        val activity = LocalContext.current.activity
-        println("content: ${LocalContext.current}")
-        println("activity: $activity")
-        SocialMediaIcon(
-            onClick = { activity?.openFacebook() },
-            icon = facebook,
-            description = stringResource(id = R.string.facebook)
-        )
-        SocialMediaIcon(
-            onClick = { activity?.openTwitter() },
-            icon = twitter,
-            description = stringResource(id = R.string.twitter)
-        )
-        SocialMediaIcon(
-            onClick = { activity?.openTelegram() },
-            icon = telegram,
-            description = stringResource(id = R.string.telegram)
-        )
+        ContactUs()
     }
+}
+
+@Composable
+private fun ColumnScope.ContactUs() {
+    val activity = LocalContext.current.activity
+    SocialMediaIcon(
+        onClick = { activity?.openFacebook() },
+        icon = facebook,
+        description = stringResource(id = R.string.facebook)
+    )
+    SocialMediaIcon(
+        onClick = { activity?.openTwitter() },
+        icon = twitter,
+        description = stringResource(id = R.string.twitter)
+    )
+    SocialMediaIcon(
+        onClick = { activity?.openTelegram() },
+        icon = telegram,
+        description = stringResource(id = R.string.telegram)
+    )
 }
 
 @Composable
