@@ -15,4 +15,11 @@
     <string name="facebook">فيسبوك</string>
     <string name="twitter">تويتر</string>
     <string name="telegram">تيليجرام</string>
+    <string name="click_to_sign_in">سجل الدخول</string>
+    <string name="email">عنوان المستخدم</string>
+    <string name="password">كلمة المرور</string>
+    <string name="show_password">إظهار كلمة السر</string>
+    <string name="login">تسجيل الدخول</string>
+    <string name="invalid_user">لا يوجد مستخدم بهذا الاسم</string>
+    <string name="error_occurred">حدث خلل ولم نستطع الدخول</string>
 </resources>

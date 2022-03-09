@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.fiqhsearcher.R.string.search_label
 import com.fiqhsearcher.R.string.start_search
-import com.fiqhsearcher.components.SearchTextBar
+import com.fiqhsearcher.components.TextBar
 
 @Composable
 @OptIn(ExperimentalComposeUiApi::class)
@@ -32,7 +32,7 @@ fun SearchBar(
 ) {
     val focusManager = LocalFocusManager.current
     val keyboard = LocalSoftwareKeyboardController.current
-    SearchTextBar(
+    TextBar(
         darkTheme = darkTheme,
         value = value,
         onValueChange = onValueChange,

@@ -1,6 +1,8 @@
 package com.fiqhsearcher.components
 
+import android.util.Patterns.EMAIL_ADDRESS
 import androidx.compose.animation.Animatable
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -34,7 +36,7 @@ import com.fiqhsearcher.ui.theme.LightThemeColors
 import kotlinx.coroutines.launch
 
 @Composable
-fun SearchTextBar(
+fun TextBar(
     darkTheme: Boolean,
     value: String,
     onValueChange: (String) -> Unit,
@@ -52,6 +54,7 @@ fun SearchTextBar(
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     singleLine: Boolean = false,
     textAlign: TextAlign = TextAlign.Right,
+    labelAlign: TextAlign = TextAlign.Right,
     maxLines: Int = Int.MAX_VALUE,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     onTextLayout: (TextLayoutResult) -> Unit = {},
@@ -98,15 +101,20 @@ fun SearchTextBar(
             cursorBrush = cursorBrush,
             decorationBox = {
                 Column(verticalArrangement = Arrangement.Center) {
-                    Text(
-                        modifier = Modifier.fillMaxWidth(),
-                        text = if (value.isNotEmpty()) "" else label,
-                        color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.5f),
-                        textAlign = textAlign
-                    )
+                    AnimatedVisibility(visible = value.isEmpty()) {
+                        Text(
+                            modifier = Modifier.fillMaxWidth(),
+                            text = label,
+                            color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.5f),
+                            textAlign = labelAlign
+                        )
+                    }
                 }
                 it()
             }
         )
     }
+}
+fun String.isValidEmail(): Boolean {
+    return isNotEmpty() && EMAIL_ADDRESS.matcher(this).matches()
 }

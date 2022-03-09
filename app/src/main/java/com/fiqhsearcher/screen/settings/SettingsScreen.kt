@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.datastore.preferences.core.edit
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.fiqhsearcher.Madhab
 import com.fiqhsearcher.R
 import com.fiqhsearcher.R.drawable.*
@@ -37,6 +38,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun SettingsScreen(
+    navigator: NavController,
     preferences: PreferencesViewModel = hiltViewModel(),
 ) {
     val scope = rememberCoroutineScope()
@@ -56,6 +58,12 @@ fun SettingsScreen(
             textAlign = TextAlign.Center
         )
         Divider(modifier = Modifier.padding(horizontal = 20.dp))
+        DisplayUserProfile(
+            navigator = navigator,
+            modifier = Modifier
+                .align(End)
+                .padding(10.dp)
+        )
         SwitchWithLabel(
             checked = darkTheme,
             onCheckedChange = { v -> scope.launch { dataStore.edit { it[DARK_THEME] = v } } },
