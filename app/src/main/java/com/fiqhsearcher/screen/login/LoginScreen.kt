@@ -30,6 +30,7 @@ import com.fiqhsearcher.R
 import com.fiqhsearcher.components.TextBar
 import com.fiqhsearcher.components.isValidEmail
 import com.fiqhsearcher.preferences.PreferencesViewModel
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 
 @OptIn(ExperimentalComposeUiApi::class, androidx.compose.material3.ExperimentalMaterial3Api::class)
@@ -149,7 +150,9 @@ fun LoginScreen(
                         errorString = context.mapToMessage(it)
                     },
                     onSuccess = {
-                        navigator.navigateUp()
+                        navigator.navigate("settings") {
+                            popUpTo("home")
+                        }
                     }
                 )
             },
@@ -177,6 +180,7 @@ fun LoginScreen(
 private fun Context.mapToMessage(exception: Exception): String {
     val id = when (exception) {
         is FirebaseAuthInvalidUserException -> R.string.invalid_user
+        is FirebaseAuthInvalidCredentialsException -> R.string.wrong_password
         else -> R.string.error_occurred
     }
     return getString(id)

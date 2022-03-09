@@ -22,4 +22,10 @@
     <string name="login">تسجيل الدخول</string>
     <string name="invalid_user">لا يوجد مستخدم بهذا الاسم</string>
     <string name="error_occurred">حدث خلل ولم نستطع الدخول</string>
+    <string name="sign_out">الخروج</string>
+    <string name="wrong_password">كلمة السر خاطئة</string>
+    <string name="are_you_sure">هل أنت متأكد؟</string>
+    <string name="sign_out_confirmation">هل أنت متأكد من أنك تريد الخروج؟</string>
+    <string name="yes">نعم</string>
+    <string name="no">لا</string>
 </resources>

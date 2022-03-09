@@ -1,19 +1,24 @@
 package com.fiqhsearcher.screen.settings
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.fiqhsearcher.R
 import com.fiqhsearcher.screen.login.LoginViewModel
+import com.google.firebase.auth.FirebaseUser
 
 @Composable
 fun DisplayUserProfile(
@@ -22,22 +27,102 @@ fun DisplayUserProfile(
     login: LoginViewModel = hiltViewModel(),
 ) {
     val user by login.user.collectAsState()
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        if (user != null)
+            SignOutButton(
+                modifier = modifier,
+                onClick = { login.signOut() }
+            )
+        UserName(user = user, modifier = modifier, navigator = navigator)
+    }
+}
+
+@Composable
+private fun SignOutButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
+    var displayConfirmationDialogue by remember { mutableStateOf(false) }
+    TextButton(
+        onClick = { displayConfirmationDialogue = true },
+        contentPadding = PaddingValues(1.dp)
+    ) {
+        Text(
+            text = stringResource(id = R.string.sign_out),
+            modifier = modifier,
+            fontWeight = FontWeight.Bold,
+            fontSize = 18.sp,
+            color = MaterialTheme.colorScheme.error
+        )
+    }
+    if (displayConfirmationDialogue) {
+        AlertDialog(
+            modifier = Modifier.padding(20.dp),
+            onDismissRequest = { displayConfirmationDialogue = false },
+            title = {
+                Text(
+                    text = stringResource(id = R.string.are_you_sure),
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Right,
+                )
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        displayConfirmationDialogue = false
+                        onClick()
+                    }
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.yes),
+                        textAlign = TextAlign.Right,
+                        fontSize = 18.sp,
+                    )
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = { displayConfirmationDialogue = false }
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.no),
+                        textAlign = TextAlign.Right,
+                        fontSize = 18.sp,
+                    )
+                }
+            }
+        )
+    }
+}
+
+@Composable
+private fun UserName(
+    user: FirebaseUser?,
+    modifier: Modifier = Modifier,
+    navigator: NavController
+) {
     if (user == null) {
         Text(
             text = stringResource(id = R.string.click_to_sign_in),
-            modifier = modifier.clickable { navigator.navigate("login") },
-            fontWeight = FontWeight.Medium,
-            fontSize = 18.sp
-        )
-        return
-    } else {
-        val user = user ?: return
-        Text(
-            text = user.displayName ?: "No Name",
-            modifier = modifier,
+            modifier = modifier
+                .clickable { navigator.navigate("login") }
+                .fillMaxWidth(),
             fontWeight = FontWeight.Medium,
             fontSize = 18.sp,
             textAlign = TextAlign.Right
+        )
+    } else {
+        val displayName = if (user.displayName.isNullOrBlank())
+            user.email ?: "no name"
+        else
+            user.displayName ?: "no name"
+        Text(
+            text = displayName,
+            modifier = modifier,
+            fontWeight = FontWeight.Medium,
+            fontSize = 20.sp,
+            textAlign = TextAlign.Right,
         )
     }
 }
