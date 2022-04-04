@@ -1,9 +1,9 @@
-@file:Suppress("EXPERIMENTAL_IS_NOT_ENABLED")
-
 package com.fiqhsearcher.screen.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
@@ -34,7 +34,8 @@ fun HomeScreen(
     val darkTheme by preferences.darkTheme.collectAsState()
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top
+        verticalArrangement = Arrangement.Top,
+        modifier = Modifier.verticalScroll(rememberScrollState())
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -72,9 +73,13 @@ fun HomeScreen(
             value = query,
             onValueChange = { query = it },
             darkTheme = darkTheme,
-            onSubmit = {}
+            onSubmit = {
+                navigator.navigate("search/$query")
+            }
         )
-        SearchButton {}
+        SearchButton(enabled = query.isNotEmpty()) {
+            navigator.navigate("search/$query")
+        }
     }
 }
 

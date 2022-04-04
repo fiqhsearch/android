@@ -3,7 +3,6 @@ plugins {
     id "org.jetbrains.kotlin.android"
     id "kotlin-kapt"
     id "dagger.hilt.android.plugin"
-    id "com.google.gms.google-services"
 }
 
 android {
@@ -38,19 +37,24 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
     buildFeatures {
         compose true
     }
+
     composeOptions {
         kotlinCompilerExtensionVersion compose_version
     }
+
     packagingOptions {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -59,24 +63,28 @@ android {
 }
 
 dependencies {
-    implementation 'com.google.firebase:firebase-database-ktx:20.0.3'
     def nav_version = "2.4.1"
-    implementation platform('com.google.firebase:firebase-bom:29.1.0')
-    implementation 'com.google.firebase:firebase-auth-ktx'
-    implementation 'com.google.firebase:firebase-analytics'
-//    implementation 'com.google.android.gms:play-services-auth:20.1.0'
+    def supabase_version = "75dc5221d0"
+
+    implementation "com.squareup.moshi:moshi:1.13.0"
+    implementation "com.squareup.okhttp3:okhttp:5.0.0-alpha.6"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:1.13.0"
+
+    implementation "com.github.Revxrsal.supabase-kt:gotrue-kt:$supabase_version"
+    implementation "com.github.Revxrsal.supabase-kt:postgrest-kt:$supabase_version"
+    implementation "com.github.Revxrsal.supabase-kt:common:$supabase_version"
 
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
-    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+    implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
 
-    implementation("androidx.navigation:navigation-compose:$nav_version")
-    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.5.0-alpha03"
+    implementation "androidx.navigation:navigation-compose:$nav_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.5.0-alpha05"
     implementation "androidx.datastore:datastore-preferences:1.0.0"
-    implementation "androidx.compose.material3:material3:1.0.0-alpha06"
+    implementation "androidx.compose.material3:material3:1.0.0-alpha08"
     implementation "androidx.core:core-ktx:1.7.0"
     implementation "androidx.compose.ui:ui:$compose_version"
-    implementation "com.google.android.material:material:1.6.0-alpha03"
+    implementation "com.google.android.material:material:1.6.0-beta01"
     implementation "androidx.compose.material:material:$compose_version"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.1"
     implementation "androidx.activity:activity-compose:1.4.0"

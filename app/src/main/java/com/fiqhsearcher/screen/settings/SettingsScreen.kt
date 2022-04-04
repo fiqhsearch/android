@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.sp
 import androidx.datastore.preferences.core.edit
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.fiqhsearcher.Madhab
+import com.fiqhsearcher.fiqh.Madhab
 import com.fiqhsearcher.R
 import com.fiqhsearcher.R.drawable.*
 import com.fiqhsearcher.components.Switch

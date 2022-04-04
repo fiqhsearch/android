@@ -20,10 +20,10 @@ import androidx.compose.ui.unit.sp
 import com.fiqhsearcher.R.string.search_label
 import com.fiqhsearcher.R.string.start_search
 import com.fiqhsearcher.components.TextBar
+import com.fiqhsearcher.screen.queryArg
 
 @Composable
 @OptIn(ExperimentalComposeUiApi::class)
-@Suppress("EXPERIMENTAL_IS_NOT_ENABLED")
 fun SearchBar(
     darkTheme: Boolean,
     value: String,
@@ -49,7 +49,8 @@ fun SearchBar(
             onSearch = {
                 focusManager.clearFocus()
                 keyboard?.hide()
-                onSubmit()
+                if (value.isNotEmpty())
+                    onSubmit()
             }
         ),
         keyboardOptions = KeyboardOptions(
@@ -61,11 +62,12 @@ fun SearchBar(
 @OptIn(ExperimentalComposeUiApi::class)
 @Suppress("EXPERIMENTAL_IS_NOT_ENABLED")
 @Composable
-fun SearchButton(onClick: () -> Unit) {
+fun SearchButton(enabled: Boolean, onClick: () -> Unit) {
     val keyboard = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
     Button(
         modifier = Modifier.padding(10.dp),
+        enabled = enabled,
         onClick = {
             keyboard?.hide()
             focusManager.clearFocus()

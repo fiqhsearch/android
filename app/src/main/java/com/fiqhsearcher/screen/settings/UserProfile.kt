@@ -18,7 +18,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.fiqhsearcher.R
 import com.fiqhsearcher.screen.login.LoginViewModel
-import com.google.firebase.auth.FirebaseUser
+import io.supabase.gotrue.type.SupabaseUser
 
 @Composable
 fun DisplayUserProfile(
@@ -98,7 +98,7 @@ private fun SignOutButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
 
 @Composable
 private fun UserName(
-    user: FirebaseUser?,
+    user: SupabaseUser?,
     modifier: Modifier = Modifier,
     navigator: NavController
 ) {
@@ -113,10 +113,7 @@ private fun UserName(
             textAlign = TextAlign.Right
         )
     } else {
-        val displayName = if (user.displayName.isNullOrBlank())
-            user.email ?: "no name"
-        else
-            user.displayName ?: "no name"
+        val displayName = user.email ?: "no name"
         Text(
             text = displayName,
             modifier = modifier,

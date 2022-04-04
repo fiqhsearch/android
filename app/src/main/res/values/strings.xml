@@ -20,7 +20,7 @@
     <string name="password">كلمة المرور</string>
     <string name="show_password">إظهار كلمة السر</string>
     <string name="login">تسجيل الدخول</string>
-    <string name="invalid_user">لا يوجد مستخدم بهذا الاسم</string>
+    <string name="invalid_user">لا يوجد مستخدم بهذا الاسم، أو أن كلمة السر خاطئة</string>
     <string name="error_occurred">حدث خلل ولم نستطع الدخول</string>
     <string name="sign_out">الخروج</string>
     <string name="wrong_password">كلمة السر خاطئة</string>
@@ -28,4 +28,8 @@
     <string name="sign_out_confirmation">هل أنت متأكد من أنك تريد الخروج؟</string>
     <string name="yes">نعم</string>
     <string name="no">لا</string>
+    <string name="ibadat">عبادات</string>
+    <string name="mo3amalat">معاملات</string>
+    <string name="jinayat">جنايات</string>
+    <string name="osrah">فقه الأسرة</string>
 </resources>

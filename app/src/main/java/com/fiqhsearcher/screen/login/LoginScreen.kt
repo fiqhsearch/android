@@ -4,8 +4,10 @@ package com.fiqhsearcher.screen.login
 
 import android.content.Context
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
@@ -30,8 +32,6 @@ import com.fiqhsearcher.R
 import com.fiqhsearcher.components.TextBar
 import com.fiqhsearcher.components.isValidEmail
 import com.fiqhsearcher.preferences.PreferencesViewModel
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.google.firebase.auth.FirebaseAuthInvalidUserException
 
 @OptIn(ExperimentalComposeUiApi::class, androidx.compose.material3.ExperimentalMaterial3Api::class)
 @Composable
@@ -51,13 +51,14 @@ fun LoginScreen(
     val valid = rememberSaveable(email, password) {
         email.isValidEmail() && password.isNotEmpty()
     }
-    var error by remember { mutableStateOf(false) }
     var errorString by remember { mutableStateOf<String?>(null) }
 
     val keyboard = LocalSoftwareKeyboardController.current
+    val context = LocalContext.current
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top
+        verticalArrangement = Arrangement.Top,
+        modifier = Modifier.verticalScroll(rememberScrollState())
     ) {
         Spacer(modifier = Modifier.padding(10.dp))
         Text(
@@ -74,7 +75,7 @@ fun LoginScreen(
             value = email,
             onValueChange = {
                 email = it
-                error = false
+                errorString = null
             },
             surfaceModifier = Modifier
                 .padding(vertical = 10.dp, horizontal = 20.dp)
@@ -99,7 +100,7 @@ fun LoginScreen(
             value = password,
             onValueChange = {
                 password = it
-                error = false
+                errorString = null
             },
             surfaceModifier = Modifier
                 .padding(vertical = 10.dp, horizontal = 20.dp)
@@ -138,22 +139,20 @@ fun LoginScreen(
                 onCheckedChange = { showPassword = it },
             )
         }
-        val context = LocalContext.current
         Button(
             onClick = {
                 keyboard?.hide()
                 loginViewModel.login(
                     email = email,
                     password = password,
-                    onFail = {
-                        error = true
-                        errorString = context.mapToMessage(it)
-                    },
                     onSuccess = {
                         navigator.navigate("settings") {
                             popUpTo("home")
                         }
-                    }
+                    },
+                    onFail = {
+                        errorString = context.getMessage(it)
+                    },
                 )
             },
             enabled = valid
@@ -164,24 +163,22 @@ fun LoginScreen(
                 fontWeight = FontWeight.Bold
             )
         }
-        if (error && errorString != null) {
+        if (errorString != null) {
             Text(
                 text = errorString!!,
                 fontSize = 15.sp,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.error,
-                textAlign = TextAlign.End,
-                modifier = Modifier.padding(10.dp)
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(10.dp).fillMaxWidth()
             )
         }
     }
 }
 
-private fun Context.mapToMessage(exception: Exception): String {
-    val id = when (exception) {
-        is FirebaseAuthInvalidUserException -> R.string.invalid_user
-        is FirebaseAuthInvalidCredentialsException -> R.string.wrong_password
-        else -> R.string.error_occurred
+private fun Context.getMessage(it: Exception): String? {
+    return when (val m = it.message?.lowercase()) {
+        "invalid login credentials" -> getString(R.string.invalid_user)
+        else -> m
     }
-    return getString(id)
 }

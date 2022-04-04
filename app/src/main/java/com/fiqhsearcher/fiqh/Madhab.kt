@@ -1,4 +1,4 @@
-package com.fiqhsearcher
+package com.fiqhsearcher.fiqh
 
 import androidx.annotation.StringRes
 import com.fiqhsearcher.R.string.*
