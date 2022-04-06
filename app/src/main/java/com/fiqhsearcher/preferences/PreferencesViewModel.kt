@@ -3,7 +3,7 @@ package com.fiqhsearcher.preferences
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.fiqhsearcher.fiqh.Madhab
+import com.fiqhsearcher.fiqh.Madhhab
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +20,7 @@ class PreferencesViewModel @Inject constructor(
     private val _darkTheme = MutableStateFlow(true)
     val darkTheme = _darkTheme.asStateFlow()
 
-    private val _madhab = MutableStateFlow(Madhab.HANBALI)
+    private val _madhab = MutableStateFlow(Madhhab.HANBALI)
     val madhab = _madhab.asStateFlow()
 
     init {
@@ -31,7 +31,7 @@ class PreferencesViewModel @Inject constructor(
         }
         viewModelScope.launch {
             context.dataStore.data.map { it[MADHAB] ?: 0 }.collect {
-                _madhab.value = Madhab.values[it]
+                _madhab.value = Madhhab.values[it]
             }
         }
     }

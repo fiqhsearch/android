@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">الباحث الفقهي</string>
     <string name="home_header">الباحث الفقهي</string>
-    <string name="search_label">…اختر كلمات مفتاحية، ولا تكثر</string>
-    <string name="start_search">تصفح المسائل</string>
+    <string name="search_label">اختر كلمات مفتاحية، ولا تكثر…</string>
+    <string name="start_search">تصفح جميع المسائل</string>
     <string name="hanbali">حنبلي</string>
     <string name="shaifii">شافعي</string>
     <string name="hanafi">حنفي</string>
@@ -32,4 +32,14 @@
     <string name="mo3amalat">معاملات</string>
     <string name="jinayat">جنايات</string>
     <string name="osrah">فقه الأسرة</string>
+    <string name="search">البحث</string>
+    <string name="proofs">الأدلة</string>
+    <string name="answers">الأجوبة</string>
+    <string name="questions">الأسئلة</string>
+    <string name="add_new_issue">إضافة مسألة</string>
+    <string name="add_new_topic">إضافة باب أو فصل</string>
+    <string name="add_new_section">إضافة قسم فقهي</string>
+    <string name="nothing_here">ما من شيءٍ هنا</string>
+    <string name="choose_section">القسم الفقهي</string>
+    <string name="section_name">اسم الباب</string>
 </resources>

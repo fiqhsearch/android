@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.sp
 import androidx.datastore.preferences.core.edit
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.fiqhsearcher.fiqh.Madhab
+import com.fiqhsearcher.fiqh.Madhhab
 import com.fiqhsearcher.R
 import com.fiqhsearcher.R.drawable.*
 import com.fiqhsearcher.components.Switch
@@ -139,10 +139,10 @@ private fun ColumnScope.SocialMediaIcon(
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 private fun MadhabSelector(
-    selected: Madhab,
+    selected: Madhhab,
     onSelected: (Int) -> Unit
 ) {
-    for (madhab in Madhab.values) {
+    for (madhab in Madhhab.values) {
         Row(
             horizontalArrangement = Arrangement.End,
             verticalAlignment = Alignment.CenterVertically,

@@ -8,10 +8,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -21,26 +18,25 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.*
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.fiqhsearcher.R
-import com.fiqhsearcher.components.TextBar
-import com.fiqhsearcher.components.isValidEmail
-import com.fiqhsearcher.preferences.PreferencesViewModel
+import com.fiqhsearcher.components.textfields.TextField
+import com.fiqhsearcher.components.textfields.isEmailValid
 
-@OptIn(ExperimentalComposeUiApi::class, androidx.compose.material3.ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
     navigator: NavController,
-    preferences: PreferencesViewModel = hiltViewModel(),
     loginViewModel: LoginViewModel = hiltViewModel()
 ) {
-    val darkTheme by preferences.darkTheme.collectAsState()
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     var showPassword by rememberSaveable { mutableStateOf(false) }
@@ -49,7 +45,7 @@ fun LoginScreen(
         else PasswordVisualTransformation()
     }
     val valid = rememberSaveable(email, password) {
-        email.isValidEmail() && password.isNotEmpty()
+        email.isEmailValid() && password.isNotEmpty()
     }
     var errorString by remember { mutableStateOf<String?>(null) }
 
@@ -70,24 +66,28 @@ fun LoginScreen(
             textAlign = TextAlign.Center,
             fontSize = 30.sp
         )
-        TextBar(
-            darkTheme = darkTheme,
+        TextField(
             value = email,
             onValueChange = {
                 email = it
                 errorString = null
             },
-            surfaceModifier = Modifier
+            modifier = Modifier
                 .padding(vertical = 10.dp, horizontal = 20.dp)
                 .fillMaxWidth(),
             textStyle = TextStyle.Default.copy(
-                fontSize = 17.sp
+                fontSize = 17.sp,
+                fontFamily = FontFamily.Default
             ),
             singleLine = true,
-            modifier = Modifier.padding(10.dp),
-            textAlign = TextAlign.Left,
-            labelAlign = TextAlign.Right,
-            label = stringResource(R.string.email),
+            label = {
+                Text(
+                    text = stringResource(R.string.email),
+                    style = LocalTextStyle.current.copy(
+                        textDirection = TextDirection.Rtl
+                    )
+                )
+            },
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Next,
                 capitalization = KeyboardCapitalization.None,
@@ -95,25 +95,26 @@ fun LoginScreen(
                 keyboardType = KeyboardType.Email
             )
         )
-        TextBar(
-            darkTheme = darkTheme,
+        TextField(
             value = password,
             onValueChange = {
                 password = it
                 errorString = null
             },
-            surfaceModifier = Modifier
+            modifier = Modifier
                 .padding(vertical = 10.dp, horizontal = 20.dp)
                 .fillMaxWidth(),
-            textStyle = TextStyle.Default.copy(
-                fontSize = 17.sp
-            ),
-            textAlign = TextAlign.Left,
-            labelAlign = TextAlign.Right,
+//            textStyle = TextStyle.Default.copy(
+//                fontSize = 17.sp
+//            ),
             visualTransformation = visualTransformation,
             singleLine = true,
-            modifier = Modifier.padding(10.dp),
-            label = stringResource(R.string.password),
+            label = {
+                Text(
+                    text = stringResource(R.string.password),
+                    textAlign = TextAlign.End
+                )
+            },
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Go,
                 capitalization = KeyboardCapitalization.None,
@@ -170,7 +171,9 @@ fun LoginScreen(
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.error,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.padding(10.dp).fillMaxWidth()
+                modifier = Modifier
+                    .padding(10.dp)
+                    .fillMaxWidth()
             )
         }
     }

@@ -23,6 +23,8 @@
  */
 package com.fiqhsearcher.supabase
 
+import com.fiqhsearcher.fiqh.Madhhab
+import com.fiqhsearcher.fiqh.MadhabAdapter
 import com.squareup.moshi.Moshi
 import io.supabase.common.MemoryStorage
 import io.supabase.common.SupportedStorage
@@ -34,13 +36,17 @@ import java.util.concurrent.CompletableFuture
 
 val sClient: CompletableFuture<OkHttpClient> = CompletableFuture.supplyAsync { OkHttpClient() }
 
+val FIQH_MOSHI: Moshi = DEFAULT_MOSHI.newBuilder()
+    .add(Madhhab::class.java, MadhabAdapter)
+    .build()
+
 class SupabaseClient(
     url: String,
     authorization: String,
     schema: String? = null,
     authSettings: SupabaseAuthSettings = SupabaseAuthSettings(),
     storage: SupportedStorage = MemoryStorage(),
-    moshi: Moshi = DEFAULT_MOSHI,
+    moshi: Moshi = FIQH_MOSHI,
     client: OkHttpClient = sClient.get(),
 ) {
 
