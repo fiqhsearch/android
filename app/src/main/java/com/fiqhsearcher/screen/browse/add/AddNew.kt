@@ -21,13 +21,16 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.fiqhsearcher.R
+import com.fiqhsearcher.components.PageTitle
 import com.fiqhsearcher.components.dropdown.ExposedDropdownMenuBox
 import com.fiqhsearcher.components.dropdown.ExposedDropdownMenuDefaults
 import com.fiqhsearcher.components.textfields.TextField
@@ -54,14 +57,9 @@ fun NewSection(
             .padding(10.dp)
             .fillMaxWidth()
     ) {
-        Text(
+        PageTitle(
             text = "إضافة قسم فقهي",
-            modifier = Modifier
-                .padding(20.dp)
-                .fillMaxWidth(),
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center,
-            fontSize = 30.sp
+            padding = 20.dp
         )
         TextField(
             value = name,
@@ -69,10 +67,18 @@ fun NewSection(
             modifier = Modifier
                 .padding(10.dp)
                 .fillMaxWidth(),
+            textStyle = LocalTextStyle.current.copy(
+                textDirection = TextDirection.Rtl,
+                fontFamily = FontFamily.Default
+            ),
             label = {
                 Text(
-                    text = stringResource(R.string.section_name),
-                    modifier = Modifier.fillMaxWidth()
+                    text = "اسم القسم",
+                    modifier = Modifier.fillMaxWidth(),
+                    style = LocalTextStyle.current.copy(
+                        textDirection = TextDirection.Rtl,
+                        fontFamily = FontFamily.Default
+                    ),
                 )
             }
         )
@@ -82,7 +88,7 @@ fun NewSection(
             dismiss = { expanded = !expanded },
             getName = { context.getString(it.nameResource) },
             list = madhhabs,
-            label = stringResource(id = R.string.choose_section),
+            label = "المذهب",
             selected = selected,
             onSelect = { selected = it }
         )
@@ -129,14 +135,9 @@ fun NewTopic(
                 .padding(10.dp)
                 .fillMaxWidth()
         ) {
-            Text(
+            PageTitle(
                 text = "إضافة باب فقهي",
-                modifier = Modifier
-                    .padding(20.dp)
-                    .fillMaxWidth(),
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center,
-                fontSize = 30.sp
+                padding = 20.dp
             )
             TextField(
                 value = name,
@@ -144,10 +145,18 @@ fun NewTopic(
                 modifier = Modifier
                     .padding(10.dp)
                     .fillMaxWidth(),
+                textStyle = LocalTextStyle.current.copy(
+                    textDirection = TextDirection.Rtl,
+                    fontFamily = FontFamily.Default
+                ),
                 label = {
                     Text(
                         text = stringResource(R.string.section_name),
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
+                        style = LocalTextStyle.current.copy(
+                            textDirection = TextDirection.Rtl,
+                            fontFamily = FontFamily.Default
+                        ),
                     )
                 }
             )
@@ -196,9 +205,6 @@ private fun AddButton(
             .padding(20.dp)
             .fillMaxWidth(),
         enabled = enabled
-//        colors = ButtonDefaults.buttonColors(
-//            containerColor = Color(124, 179, 66, 255)
-//        )
     ) {
         Text(
             text = text,
@@ -237,13 +243,20 @@ private fun <T> DropMenu(
                     onIconClick = { dismiss() }
                 )
             },
+            textStyle = LocalTextStyle.current.copy(
+                textDirection = TextDirection.Rtl,
+                fontFamily = FontFamily.Default
+            ),
             label = {
                 Text(
                     text = label,
-                    textAlign = TextAlign.End,
                     modifier = Modifier
                         .padding(3.dp)
-                        .fillMaxWidth()
+                        .fillMaxWidth(),
+                    style = LocalTextStyle.current.copy(
+                        textDirection = TextDirection.Rtl,
+                        fontFamily = FontFamily.Default
+                    ),
                 )
             },
             modifier = Modifier
@@ -315,14 +328,9 @@ fun NewIssue(
             .fillMaxWidth()
             .verticalScroll(rememberScrollState())
     ) {
-        Text(
+        PageTitle(
             text = "إضافة مسألة",
-            modifier = Modifier
-                .padding(20.dp)
-                .fillMaxWidth(),
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center,
-            fontSize = 30.sp
+            padding = 20.dp
         )
         val context = LocalContext.current
         DropMenu(
@@ -358,10 +366,18 @@ fun NewIssue(
             modifier = Modifier
                 .padding(10.dp)
                 .fillMaxWidth(),
+            textStyle = LocalTextStyle.current.copy(
+                textDirection = TextDirection.Rtl,
+                fontFamily = FontFamily.Default
+            ),
             label = {
                 Text(
                     text = "السؤال",
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    style = LocalTextStyle.current.copy(
+                        textDirection = TextDirection.Rtl,
+                        fontFamily = FontFamily.Default
+                    )
                 )
             }
         )
@@ -372,11 +388,19 @@ fun NewIssue(
                 .padding(10.dp)
                 .fillMaxWidth()
                 .width(IntrinsicSize.Min),
+            textStyle = LocalTextStyle.current.copy(
+                textDirection = TextDirection.Rtl,
+                fontFamily = FontFamily.Default
+            ),
             singleLine = false,
             label = {
                 Text(
                     text = "الجواب",
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    style = LocalTextStyle.current.copy(
+                        textDirection = TextDirection.Rtl,
+                        fontFamily = FontFamily.Default
+                    )
                 )
             }
         )
@@ -387,11 +411,19 @@ fun NewIssue(
                 .padding(10.dp)
                 .fillMaxWidth()
                 .width(IntrinsicSize.Min),
+            textStyle = LocalTextStyle.current.copy(
+                textDirection = TextDirection.Rtl,
+                fontFamily = FontFamily.Default
+            ),
             singleLine = false,
             label = {
                 Text(
                     text = "الدليل",
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    style = LocalTextStyle.current.copy(
+                        textDirection = TextDirection.Rtl,
+                        fontFamily = FontFamily.Default
+                    )
                 )
             }
         )

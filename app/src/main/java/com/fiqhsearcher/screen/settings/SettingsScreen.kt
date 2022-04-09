@@ -27,11 +27,12 @@ import androidx.compose.ui.unit.sp
 import androidx.datastore.preferences.core.edit
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.fiqhsearcher.fiqh.Madhhab
 import com.fiqhsearcher.R
 import com.fiqhsearcher.R.drawable.*
+import com.fiqhsearcher.components.PageTitle
 import com.fiqhsearcher.components.Switch
 import com.fiqhsearcher.components.activity
+import com.fiqhsearcher.fiqh.Madhhab
 import com.fiqhsearcher.preferences.DARK_THEME
 import com.fiqhsearcher.preferences.MADHAB
 import com.fiqhsearcher.preferences.PreferencesViewModel
@@ -48,18 +49,20 @@ fun SettingsScreen(
     val darkTheme by preferences.darkTheme.collectAsState()
     Column(
         verticalArrangement = Arrangement.Center,
-        modifier = Modifier.verticalScroll(rememberScrollState())
+        modifier = Modifier
+            .verticalScroll(rememberScrollState())
+            .padding(
+                vertical = 10.dp,
+                horizontal = 3.dp
+            )
     ) {
-        Text(
-            text = stringResource(id = R.string.settings),
-            modifier = Modifier
-                .padding(10.dp)
-                .fillMaxWidth(),
-            fontWeight = FontWeight.Bold,
-            fontSize = 30.sp,
-            textAlign = TextAlign.Center
+        PageTitle(text = stringResource(id = R.string.settings))
+        Divider(
+            modifier = Modifier.padding(
+                horizontal = 20.dp,
+                vertical = 7.dp
+            )
         )
-        Divider(modifier = Modifier.padding(horizontal = 20.dp))
         DisplayUserProfile(
             navigator = navigator,
             modifier = Modifier

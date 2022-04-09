@@ -1,7 +1,12 @@
 package com.fiqhsearcher.screen.settings
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -44,18 +49,24 @@ fun DisplayUserProfile(
 @Composable
 private fun SignOutButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
     var displayConfirmationDialogue by remember { mutableStateOf(false) }
-    TextButton(
-        onClick = { displayConfirmationDialogue = true },
-        contentPadding = PaddingValues(1.dp)
-    ) {
-        Text(
-            text = stringResource(id = R.string.sign_out),
-            modifier = modifier,
-            fontWeight = FontWeight.Bold,
-            fontSize = 18.sp,
-            color = MaterialTheme.colorScheme.error
-        )
-    }
+//    TextButton(
+//        onClick = { displayConfirmationDialogue = true },
+//        contentPadding = PaddingValues(0.dp),
+//        modifier = Modifier.padding(2.dp)
+//    ) {
+    Text(
+        text = stringResource(id = R.string.sign_out),
+        modifier = modifier.clickable(
+            interactionSource = remember { MutableInteractionSource() },
+            indication = null
+        ) {
+            displayConfirmationDialogue = true
+        },
+        fontWeight = FontWeight.Bold,
+        fontSize = 16.sp,
+        color = MaterialTheme.colorScheme.error,
+    )
+//    }
     if (displayConfirmationDialogue) {
         AlertDialog(
             modifier = Modifier.padding(20.dp),
@@ -113,12 +124,13 @@ private fun UserName(
             textAlign = TextAlign.Right
         )
     } else {
-        val displayName = user.email ?: "no name"
+        val displayName = user.userMetadata.also { println(it) }
+            .key["name"]?.toString() ?: user.email ?: "no name"
         Text(
             text = displayName,
             modifier = modifier,
             fontWeight = FontWeight.Medium,
-            fontSize = 20.sp,
+            fontSize = 18.sp,
             textAlign = TextAlign.Right,
         )
     }

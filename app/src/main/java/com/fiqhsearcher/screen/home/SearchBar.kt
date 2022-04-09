@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
@@ -40,14 +41,13 @@ fun SearchBar(
                 vertical = 10.dp
             )
             .fillMaxWidth(),
-//        textStyle = TextStyle.Default.copy(
-//            fontSize = 17.sp,
-//        ),
         singleLine = true,
         label = {
             Text(
                 text = stringResource(search_label),
-                style = LocalTextStyle.current,
+                style = LocalTextStyle.current.copy(
+                    fontFamily = FontFamily.Default
+                ),
                 modifier = Modifier.fillMaxWidth()
             )
         },

@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.fiqhsearcher.R
+import com.fiqhsearcher.components.PageTitle
 import com.fiqhsearcher.components.textfields.TextField
 import com.fiqhsearcher.components.textfields.isEmailValid
 
@@ -40,10 +41,6 @@ fun LoginScreen(
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     var showPassword by rememberSaveable { mutableStateOf(false) }
-    val visualTransformation = remember(showPassword) {
-        if (showPassword) VisualTransformation.None
-        else PasswordVisualTransformation()
-    }
     val valid = rememberSaveable(email, password) {
         email.isEmailValid() && password.isNotEmpty()
     }
@@ -57,73 +54,20 @@ fun LoginScreen(
         modifier = Modifier.verticalScroll(rememberScrollState())
     ) {
         Spacer(modifier = Modifier.padding(10.dp))
-        Text(
+        PageTitle(
             text = stringResource(id = R.string.home_header),
-            modifier = Modifier
-                .padding(15.dp)
-                .fillMaxWidth(),
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center,
-            fontSize = 30.sp
+            padding = 15.dp
         )
-        TextField(
-            value = email,
-            onValueChange = {
-                email = it
-                errorString = null
-            },
-            modifier = Modifier
-                .padding(vertical = 10.dp, horizontal = 20.dp)
-                .fillMaxWidth(),
-            textStyle = TextStyle.Default.copy(
-                fontSize = 17.sp,
-                fontFamily = FontFamily.Default
-            ),
-            singleLine = true,
-            label = {
-                Text(
-                    text = stringResource(R.string.email),
-                    style = LocalTextStyle.current.copy(
-                        textDirection = TextDirection.Rtl
-                    )
-                )
-            },
-            keyboardOptions = KeyboardOptions(
-                imeAction = ImeAction.Next,
-                capitalization = KeyboardCapitalization.None,
-                autoCorrect = false,
-                keyboardType = KeyboardType.Email
-            )
+        EmailField(
+            email = email,
+            onEmailChange = { email = it },
+            removeError = { errorString = null }
         )
-        TextField(
-            value = password,
-            onValueChange = {
-                password = it
-                errorString = null
-            },
-            modifier = Modifier
-                .padding(vertical = 10.dp, horizontal = 20.dp)
-                .fillMaxWidth(),
-//            textStyle = TextStyle.Default.copy(
-//                fontSize = 17.sp
-//            ),
-            visualTransformation = visualTransformation,
-            singleLine = true,
-            label = {
-                Text(
-                    text = stringResource(R.string.password),
-                    textAlign = TextAlign.End
-                )
-            },
-            keyboardOptions = KeyboardOptions(
-                imeAction = ImeAction.Go,
-                capitalization = KeyboardCapitalization.None,
-                autoCorrect = false,
-                keyboardType = KeyboardType.Password
-            ),
-            keyboardActions = KeyboardActions(
-                onGo = { keyboard?.hide() }
-            )
+        PasswordField(
+            password = password,
+            onPasswordChange = { password = it },
+            removeError = { errorString = null },
+            showPassword = showPassword
         )
         Row(
             modifier = Modifier
@@ -177,6 +121,92 @@ fun LoginScreen(
             )
         }
     }
+}
+
+@OptIn(ExperimentalComposeUiApi::class)
+@Composable
+private fun PasswordField(
+    password: String,
+    onPasswordChange: (String) -> Unit,
+    removeError: () -> Unit,
+    showPassword: Boolean,
+) {
+    val visualTransformation = remember(showPassword) {
+        if (showPassword)
+            VisualTransformation.None
+        else
+            PasswordVisualTransformation()
+    }
+    val keyboard = LocalSoftwareKeyboardController.current
+    TextField(
+        value = password,
+        onValueChange = {
+            onPasswordChange(it)
+            removeError()
+        },
+        modifier = Modifier
+            .padding(vertical = 10.dp, horizontal = 20.dp)
+            .fillMaxWidth(),
+        visualTransformation = visualTransformation,
+        singleLine = true,
+        textStyle = LocalTextStyle.current.copy(
+            fontFamily = FontFamily.Default
+        ),
+        label = {
+            Text(
+                text = stringResource(R.string.password),
+                textAlign = TextAlign.End,
+                fontFamily = FontFamily.Default
+            )
+        },
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Go,
+            capitalization = KeyboardCapitalization.None,
+            autoCorrect = false,
+            keyboardType = KeyboardType.Password
+        ),
+        keyboardActions = KeyboardActions(
+            onGo = { keyboard?.hide() }
+        )
+    )
+}
+
+@Composable
+private fun EmailField(
+    email: String,
+    onEmailChange: (String) -> Unit,
+    removeError: () -> Unit
+) {
+    TextField(
+        value = email,
+        onValueChange = {
+            onEmailChange(it)
+            removeError()
+        },
+        modifier = Modifier
+            .padding(vertical = 10.dp, horizontal = 20.dp)
+            .fillMaxWidth(),
+        textStyle = TextStyle.Default.copy(
+            fontSize = 17.sp,
+            fontFamily = FontFamily.Default
+        ),
+        singleLine = true,
+        label = {
+            Text(
+                text = stringResource(R.string.email),
+                style = LocalTextStyle.current.copy(
+                    textDirection = TextDirection.Rtl,
+                    fontFamily = FontFamily.Default
+                )
+            )
+        },
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Next,
+            capitalization = KeyboardCapitalization.None,
+            autoCorrect = false,
+            keyboardType = KeyboardType.Email
+        )
+    )
 }
 
 private fun Context.getMessage(it: Exception): String? {

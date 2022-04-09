@@ -1,14 +1,42 @@
 package com.fiqhsearcher.components
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.SwitchDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.compositeOver
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+
+@Composable
+fun PageTitle(
+    text: String,
+    padding: Dp = 10.dp,
+    lineHeight: TextUnit = TextUnit.Unspecified
+) {
+    Text(
+        text = text,
+        modifier = Modifier
+            .padding(padding)
+            .fillMaxWidth(),
+        fontWeight = FontWeight.Bold,
+        textAlign = TextAlign.Center,
+        fontSize = 30.sp,
+        lineHeight = lineHeight
+    )
+}
+
 
 /**
  * A switch component that uses the Material 3 colors of the

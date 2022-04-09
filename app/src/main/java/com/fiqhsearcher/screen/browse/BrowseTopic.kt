@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.fiqhsearcher.R
+import com.fiqhsearcher.components.PageTitle
 import com.fiqhsearcher.data.Issue
 import com.fiqhsearcher.fiqh.Madhhab
 import com.fiqhsearcher.screen.browse.add.ToggleIcon
@@ -35,7 +36,7 @@ fun DisplayIssue(issue: Issue) {
     ) {
         Divider(
             color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.3f),
-            modifier = Modifier.padding(5.dp)
+            modifier = Modifier.padding(horizontal = 10.dp)
         )
         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
             Row(
@@ -110,8 +111,9 @@ fun BrowseTopic(
                 navigator.navigate("newIssue/${section}/${topic}")
             }
             if (issues.isEmpty()) {
-                NothingHere()
+                NothingHere(navigator = navigator)
             } else {
+                PageTitle(text = "المسائل", padding = 20.dp)
                 LazyColumn(
                     modifier = Modifier
                         .padding(10.dp)

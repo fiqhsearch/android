@@ -6,6 +6,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -13,8 +15,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.fiqhsearcher.R
-import com.google.accompanist.placeholder.material.placeholder
+import com.fiqhsearcher.components.PageTitle
+import com.fiqhsearcher.screen.login.LoginViewModel
 
 @Composable
 fun Searching() {
@@ -27,20 +32,17 @@ fun Searching() {
 }
 
 @Composable
-fun NothingHere() {
+fun NothingHere(navigator: NavController) {
     Column(
         modifier = Modifier
-            .padding(30.dp)
+            .padding(30.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
+        PageTitle(
             text = stringResource(id = R.string.nothing_here),
-            fontWeight = FontWeight.Bold,
-            fontSize = 30.sp,
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .padding(5.dp)
-                .fillMaxWidth()
+            padding = 5.dp
         )
+
         Text(
             text = ":(",
             fontWeight = FontWeight.Medium,
@@ -50,32 +52,45 @@ fun NothingHere() {
                 .padding(5.dp)
                 .fillMaxWidth()
         )
+        FilledTonalButton(
+            onClick = { navigator.navigateUp() },
+            modifier = Modifier.padding(10.dp)
+        ) {
+            Text("العودة")
+        }
     }
 }
 
 @Composable
-fun AddItemButton(text: String, onClick: () -> Unit) {
-    Button(
-        onClick = onClick,
-        modifier = Modifier
-            .padding(20.dp)
-            .fillMaxWidth()
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+fun AddItemButton(
+    text: String,
+    auth: LoginViewModel = hiltViewModel(),
+    onClick: () -> Unit,
+) {
+    val user by auth.user.collectAsState()
+    if (user != null) {
+        Button(
+            onClick = onClick,
+            modifier = Modifier
+                .padding(20.dp)
+                .fillMaxWidth()
         ) {
-            Icon(
-                imageVector = Icons.Filled.Add, contentDescription = "New",
-                modifier = Modifier.padding(5.dp)
-            )
-            Text(
-                text = text,
-                modifier = Modifier.padding(5.dp),
-                fontSize = 17.sp,
-                fontWeight = FontWeight.Bold
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Add, contentDescription = "New",
+                    modifier = Modifier.padding(5.dp)
+                )
+                Text(
+                    text = text,
+                    modifier = Modifier.padding(5.dp),
+                    fontSize = 17.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
         }
     }
 }

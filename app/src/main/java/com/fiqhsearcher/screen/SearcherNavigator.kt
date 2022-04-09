@@ -41,17 +41,21 @@ fun SearcherNavigator() {
         composable("search/{query}/{option}", listOf(queryArg)) {
             val query = it.arguments?.getString("query") ?: return@composable
             val option = it.arguments?.getString("option") ?: return@composable
-            SearchScreen(navigator = controller, query = query, searchOption = SearchOption.valueOf(option))
+            SearchScreen(
+                navigator = controller,
+                query = query,
+                searchOption = SearchOption.valueOf(option)
+            )
         }
         composable("browseAllSections") {
-            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+            LtrProvider {
                 BrowseAllSections(navigator = controller)
             }
         }
         composable("browse/{madhhab}/{sectionId}", listOf(madhhabArg, sectionId)) {
             val madhhab = it.arguments?.getString("madhhab") ?: return@composable
             val sectionId = it.arguments?.getInt("sectionId") ?: return@composable
-            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+            LtrProvider {
                 BrowseSection(
                     madhhab = Madhhab.valueOf(madhhab),
                     id = sectionId,
@@ -66,32 +70,39 @@ fun SearcherNavigator() {
             val madhhab = it.arguments?.getString("madhhab") ?: return@composable
             val sectionId = it.arguments?.getInt("sectionId") ?: return@composable
             val topicId = it.arguments?.getInt("topicId") ?: return@composable
-            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+            LtrProvider {
                 BrowseTopic(Madhhab.valueOf(madhhab), sectionId, topicId, controller)
             }
         }
         composable("newSection") {
-            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+            LtrProvider {
                 NewSection(controller)
             }
         }
         composable("newTopic/{sectionId}", listOf(sectionId)) {
             val sectionId = it.arguments?.getInt("sectionId") ?: return@composable
-            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
                 NewTopic(controller, sectionId)
             }
         }
         composable("newIssue/{sectionId}/{topicId}", listOf(sectionId, topicId)) {
             val sectionId = it.arguments?.getInt("sectionId") ?: return@composable
             val topicId = it.arguments?.getInt("topicId") ?: return@composable
-            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+            LtrProvider {
                 NewIssue(controller, sectionId, topicId)
             }
         }
         composable("login") {
-            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+            LtrProvider {
                 LoginScreen(navigator = controller)
             }
         }
+    }
+}
+
+@Composable
+fun LtrProvider(content: @Composable () -> Unit) {
+    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+        content()
     }
 }

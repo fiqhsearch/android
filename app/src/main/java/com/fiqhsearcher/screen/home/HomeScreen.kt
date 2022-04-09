@@ -25,6 +25,7 @@ import com.fiqhsearcher.R
 import com.fiqhsearcher.R.drawable.magnifying_glass
 import com.fiqhsearcher.R.string.home_header
 import com.fiqhsearcher.R.string.home_subtitle
+import com.fiqhsearcher.components.PageTitle
 
 @Composable
 fun HomeScreen(
@@ -78,15 +79,7 @@ private fun SearchArea(navigator: NavController) {
 @Composable
 private fun ScreenHead() {
     MagnifyingGlass()
-    Text(
-        text = stringResource(id = home_header),
-        modifier = Modifier
-            .padding(10.dp)
-            .fillMaxWidth(),
-        fontWeight = FontWeight.Bold,
-        textAlign = TextAlign.Center,
-        fontSize = 30.sp
-    )
+    PageTitle(text = stringResource(id = home_header))
     Text(
         text = stringResource(id = home_subtitle),
         modifier = Modifier

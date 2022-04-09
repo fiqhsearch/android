@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.fiqhsearcher.R
+import com.fiqhsearcher.components.PageTitle
 import com.fiqhsearcher.preferences.PreferencesViewModel
 import com.fiqhsearcher.screen.search.SupabaseViewModel
 
@@ -35,8 +36,9 @@ fun BrowseAllSections(
                 navigator.navigate("newSection")
             }
             if (sections.isEmpty()) {
-                NothingHere()
+                NothingHere(navigator = navigator)
             } else {
+                PageTitle(text = "الأقسام الفقهية", padding = 20.dp)
                 androidx.compose.foundation.lazy.grid.LazyVerticalGrid(
                     columns = GridCells.Fixed(2),
                     modifier = Modifier.padding(horizontal = 10.dp)

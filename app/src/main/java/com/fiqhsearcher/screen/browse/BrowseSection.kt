@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.fiqhsearcher.R
+import com.fiqhsearcher.components.PageTitle
 import com.fiqhsearcher.fiqh.Madhhab
 import com.fiqhsearcher.screen.search.SupabaseViewModel
 import com.google.accompanist.placeholder.material.placeholder
@@ -38,8 +39,9 @@ fun BrowseSection(
                 }
                 val topics = list!!
                 if (topics.isEmpty()) {
-                    NothingHere()
+                    NothingHere(navigator = navigator)
                 } else {
+                    PageTitle(text = "الأبواب الفقهية", padding = 20.dp)
                     LazyVerticalGrid(
                         columns = GridCells.Fixed(2),
                         modifier = Modifier.padding(10.dp)
