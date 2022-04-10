@@ -5,10 +5,9 @@ import android.content.Intent
 import android.content.Intent.ACTION_VIEW
 import android.net.Uri
 
-private const val TELEGRAM_GROUP = "droosonline"
-private const val TWITTER_USERNAME = "droos_online"
-private const val TWITTER_USER_ID = "droos_online"
-private const val FACEBOOK_PAGE_URL = "droosonline"
+private const val TWITTER_USERNAME = "fiqhsearch"
+private const val TWITTER_USER_ID = "fiqhsearch"
+private const val FACEBOOK_PAGE_URL = "fiqhsearch"
 
 fun Activity.openFacebook() {
     val pageURL = "https://www.facebook.com/n/?$FACEBOOK_PAGE_URL"
@@ -33,7 +32,7 @@ fun Activity.openTwitter() {
 }
 
 fun Activity.openTelegram() {
-    val url = Uri.parse("https://t.me/$TELEGRAM_GROUP")
+    val url = Uri.parse("https://t.me/fiqhsearch")
     try {
         val telegram = Intent(ACTION_VIEW, url)
         telegram.setPackage("org.telegram.messenger")

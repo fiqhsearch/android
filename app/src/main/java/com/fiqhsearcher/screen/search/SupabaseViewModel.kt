@@ -75,7 +75,7 @@ class SupabaseViewModel @Inject constructor(
         return viewModelScope.launch(Dispatchers.IO) {
             client.data.from<Topic>("topics")
                 .insert(Topic(name = name, madhhab = madhhab, section = section))
-                .execute().response.body!!.string().also { println(it) }
+                .execute().response.body!!.string()
         }
     }
 
@@ -83,7 +83,7 @@ class SupabaseViewModel @Inject constructor(
         return viewModelScope.launch(Dispatchers.IO) {
             client.data.from<Section>("sections")
                 .insert(Section(name = name, madhhab = madhhab))
-                .execute().response.body!!.string().also { println(it) }
+                .execute().response.body!!.string()
         }
     }
 
@@ -107,7 +107,7 @@ class SupabaseViewModel @Inject constructor(
                         topic = topic
                     )
                 )
-                .execute().response.body!!.string().also { println(it) }
+                .execute().response.body!!.string()
         }
     }
 }

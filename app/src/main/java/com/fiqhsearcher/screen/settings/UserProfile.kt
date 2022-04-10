@@ -124,8 +124,7 @@ private fun UserName(
             textAlign = TextAlign.Right
         )
     } else {
-        val displayName = user.userMetadata.also { println(it) }
-            .key["name"]?.toString() ?: user.email ?: "no name"
+        val displayName = user.userMetadata["name"]?.toString() ?: user.email ?: "no name"
         Text(
             text = displayName,
             modifier = modifier,
